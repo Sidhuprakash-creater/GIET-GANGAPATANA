@@ -61,6 +61,10 @@ Do not include any text before or after the JSON.`;
         return { questions: parsed.questions.slice(0, count) };
     } catch (error) {
         console.error('Gemini question generation error:', error);
+        if (error instanceof Error) {
+            console.error('Error message:', error.message);
+            console.error('Stack trace:', error.stack);
+        }
         // Fallback questions
         return { questions: getFallbackQuestions(moduleType, count) };
     }

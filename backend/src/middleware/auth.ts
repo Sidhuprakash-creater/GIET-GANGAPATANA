@@ -30,7 +30,9 @@ export const verifyAuth = async (
         }
 
         const token = authHeader.split('Bearer ')[1];
+        // console.log(`🔍 Verifying token: ${token.substring(0, 10)}...`);
         const decoded = await auth.verifyIdToken(token);
+        // console.log(`✅ Token verified for user: ${decoded.uid}`);
 
         req.user = {
             uid: decoded.uid,
@@ -40,8 +42,8 @@ export const verifyAuth = async (
 
         next();
     } catch (error) {
-        console.error('Auth verification error:', error);
-        res.status(401).json({ error: 'Invalid or expired token' });
+        console.error('❌ Auth verification error:', error);
+        res.status(401).json({ error: 'Invalid or expired token', details: (error as Error).message });
     }
 };
 

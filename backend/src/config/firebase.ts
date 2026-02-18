@@ -17,8 +17,11 @@ try {
     });
     console.log('✅ Firebase Admin initialized successfully');
 } catch (error) {
-    console.warn('⚠️  Firebase service account not found. Running in demo mode.');
-    console.warn('   Place your firebase-service-account.json in the backend root.');
+    console.error('❌ Failed to load Firebase credentials:', error);
+    console.warn(`Tried loading from: ${path.resolve(serviceAccountPath)}`);
+    console.warn('⚠️  Running in demo mode (Auth will fail for real tokens).');
+    console.warn('   Make sure the service account file exists and is valid JSON.');
+
     // Initialize without credentials for development
     if (!admin.apps.length) {
         admin.initializeApp({
